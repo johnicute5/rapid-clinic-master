@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Rapid Clinic</title>
+
+</head>
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="inline-block ">
+    <p class="text-xl font-bold inline-block ml-2 mt-8 mb-4 ">Patient Details </p>
+    <button class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="w-6 h-6 inline-block ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"/>
+        </svg>
+        <span class="justify-center " >
+            <a th:href="@{/patient}">Back</a></span>
+
+    </button>
+</div>
+
+<div class="container max-w-4xl mx-auto mt-10">
+    <div class="flex flex-col">
+        <div class="w-full">
+            <div class="shadow-md rounded px-8 bg-white pt-6 pb-8 mb-4">
+                <form class="w-full max-w-4xl" th:action="@{/patient_edit_action}" method="post" th:object="${patient}" >
+                    <div class="md:items-center md:items-center mb-6">
+                        <div class="justify-center">
+                            <label class="block text-[#101010] text-2xl font-bold md:text-center mb-1 mr-6 md:mb-0 pr-6">
+                                Edit Patient
+                            </label>
+                        </div>
+                    </div>
+                    <div sec:authorize="hasAnyRole('NURSE', 'PATIENT', 'DOCTOR')">
+                    <input type="hidden" th:field="*{patientID}" />
+                    <div class="grid grid-cols-2 gap-4">
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="firstName">
+                                First Name :
+                            </label>
+                       
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id="firstName" 
+                                   type="text" 
+                                   th:field="*{firstName}"
+                                   readonly="readonly"/> <br/>
+                                   		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{firstName}"></p>
+                        
+                    
+                    </div>
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="middleName">
+                                Middle Name(Optional):
+                            </label>
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id=middleName 
+                                   type="text" 
+                                   th:field="*{middleName}"
+                                    readonly="readonly"/>
+                    </div>
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="lastName">
+                                Last Name:
+                            </label>
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id=lastName 
+                                   type="text" 
+                                   th:field="*{lastName}"
+                                   readonly="readonly"/><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{lastName}"></p>
+                    </div>
+                   
+                    
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="firstName">
+                                User Name :
+                            </label>
+                       
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id="userName" 
+                                   type="text" 
+                                   th:field="*{userName}" 
+                                   readonly="readonly"/><br/>		                        
+						
+                    </div>
+                    
+                    <div class="col-md-6 form-group">
+                          <label class="block text-[#878787] font-bold" for="email">
+                          	Email
+                          </label>
+                          <input
+                            class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            id=email 
+                            th:field="*{email}" 
+                           	readonly="readonly"><br/>		                        
+						
+                    </div>
+                	
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="gender">
+                                   Gender
+                            </label>
+                        <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                         id=gender th:field="*{gender}"  readonly="readonly"/>	                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{gender}"></p>
+                    </div>
+                    
+                    <div class="col-md-6 form-group">
+                          <label class="block text-[#878787] font-bold" for="bDay">
+                             Birthday:
+                          </label>
+                          <input
+                            class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            type="date" th:field="*{bDay}"><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{bDay}"></p>
+                    </div> 
+                    
+                    <div class="col-md-6 form-group">
+                       <label class="block text-[#878787] font-bold"
+                                   for="address">
+                                Address:
+                       </label>
+                       <textarea
+                           class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                           id=address
+                          th:field="*{address}"> 
+                       </textarea><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{address}"></p>
+                    </div>
+                  
+                    <div class="col-md-6 form-group">
+                          <label class="block text-[#878787] font-bold" for="contactNo">
+                             Contact No.:
+                          </label>
+                          <input
+                            class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            id=contactNo th:field="*{contactNo}"/><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{contactNo}"></p>
+                    </div> 
+                    </div>
+                    </div>
+                    
+                    
+                    <!-- ADMIN  -->
+                    
+                    <div sec:authorize="hasAnyRole('ADMIN')">
+                    <input type="hidden" th:field="*{patientID}" />
+                    <div class="grid grid-cols-2 gap-4">
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="firstName">
+                                First Name :
+                            </label>
+                       
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id="firstName" 
+                                   type="text" 
+                                   th:field="*{firstName}"/> <br/>
+                                   		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{firstName}"></p>
+                        
+                    
+                    </div>
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="middleName">
+                                Middle Name(Optional):
+                            </label>
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id=middleName 
+                                   type="text" 
+                                   th:field="*{middleName}"/>
+                    </div>
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="lastName">
+                                Last Name:
+                            </label>
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id=lastName 
+                                   type="text" 
+                                   th:field="*{lastName}"/><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{lastName}"></p>
+                    </div>
+                   
+                    
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="firstName">
+                                User Name :
+                            </label>
+                       
+                            <input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                   id="userName" 
+                                   type="text" 
+                                   th:field="*{userName}" /><br/>		                        
+						
+                    </div>
+                    
+                    <div class="col-md-6 form-group">
+                          <label class="block text-[#878787] font-bold" for="email">
+                          	Email
+                          </label>
+                          <input
+                            class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            id=email 
+                            th:field="*{email}" ><br/>		                        
+						
+                    </div>
+                	
+                    <div class="col-md-6 form-group">
+                            <label class="block text-[#878787] font-bold"
+                                   for="gender">
+                                   Gender
+                            </label>
+                        <select class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                         id=gender th:field="*{gender}" >
+                            <option value="">Choose...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            
+                        </select><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{gender}"></p>
+                    </div>
+                    
+                    <div class="col-md-6 form-group">
+                          <label class="block text-[#878787] font-bold" for="bDay">
+                             Birthday:
+                          </label>
+                          <input
+                            class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            type="date" th:field="*{bDay}"><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{bDay}"></p>
+                    </div> 
+                    
+                    <div class="col-md-6 form-group">
+                       <label class="block text-[#878787] font-bold"
+                                   for="address">
+                                Address:
+                       </label>
+                       <textarea
+                           class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                           id=address
+                          th:field="*{address}"> 
+                       </textarea><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{address}"></p>
+                    </div>
+                  
+                    <div class="col-md-6 form-group">
+                          <label class="block text-[#878787] font-bold" for="contactNo">
+                             Contact No.:
+                          </label>
+                          <input
+                            class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            id=contactNo th:field="*{contactNo}"/><br/>		                        
+						<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+							th:if="${#fields.hasErrors}" th:errors="*{contactNo}"></p>
+                    </div> 
+                    </div>
+                    </div>
+                    <br>
+                    <div class="md:flex md:items-center">
+                      
+                        <div class="md:w-2/3">
+                            <button class="shadow bg-[#46bb91] text-center hover:bg-[#5c87f8] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-40 rounded"
+                                    type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

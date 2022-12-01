@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/dist/output.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+<title>Rapid Clinic</title>
+</head>
+<body class="bg-[#f7f7f7]">
+	<div th:replace="~{fragments/header :: header}"></div>
+	<h1
+		class="text-xl font-bold text-[#101010] inline-block ml-2 mt-8 mb-4 ">Visitation>
+		Visitation Edit > Edit Visitation</h1>
+
+	<a th:href="@{/visitation}">
+		<button
+			class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+			Back</button>
+	</a>
+
+
+	<div class="container max-w-4xl mx-auto mt-10">
+		<div class="flex flex-col">
+			<div class="w-full">
+				<div class="shadow-md rounded px-8 bg-white pt-6 pb-8 mb-4">
+					<form class="w-full max-w-4xl"
+						th:action="@{/visitation_editAction/}+${visit.medicalCertificateID}"
+						method="post" th:object="${visit}">
+						<div class="md:items-center md:items-center mb-6">
+							<div class="justify-center">
+								<label
+									class="block text-[#101010] text-2xl font-bold md:text-center mb-1 mr-6 md:mb-0 pr-6">
+									Edit Visitation </label>
+							</div>
+						</div>
+						<div sec:authorize="hasAnyRole('ADMIN', 'DOCTOR')">
+
+							<div class="grid grid-cols-2 gap-4">
+
+								<!-- <div class="col-md-6 form-group"></div> -->
+
+								<div class="md:flex md:items-center mb-6">
+									<div class="md:w-1/3">
+										<label
+											class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+											for="name"> Name : </label>
+									</div>
+									<div class="md:w-2/3">
+										<input th:field="*{name}"
+											class="bg-slate-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+											id="name">
+									</div>
+								</div>
+								<div class="md:flex md:items-center mb-6">
+									<div class="md:w-1/3">
+										<label
+											class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+											for="icNumber"> IC No. : </label>
+									</div>
+									<div class="md:w-2/3">
+										<input th:field="*{icNo}"
+											class="bg-slate-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+											id="icNumber">
+									</div>
+								</div>
+
+
+								<div class="md:flex md:items-center mb-6 form-group">
+									<div class="md:w-1/3">
+										<label
+											class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6">Date:</label>
+									</div>
+									<div class="md:w-2/3">
+										<input
+											class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#46BB91]"
+											type="date" th:field="*{date}" /><br />
+
+										<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+											th:if="${#fields.hasErrors}" th:errors="*{date}"></p>
+									</div>
+
+								</div>
+
+								<div class="md:flex md:items-center mb-6 form-group">
+									<div class="md:w-1/3">
+										<label
+											class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+											for="Day"> Day: </label>
+									</div>
+									<div class="md:w-2/3">
+										<input
+											class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
+											id=Day value="" th:field="*{Day}"><br />
+										<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+											th:if="${#fields.hasErrors}" th:errors="*{Day}"></p>
+
+									</div>
+								</div>
+
+								<div class="md:flex md:items-center mb-6 form-group">
+									<div class="md:w-1/3">
+										<label
+											class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+											for="time"> Time: </label>
+									</div>
+									<div class="md:w-2/3">
+										<input
+											class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
+											id=time type="time" value="" th:field="*{time}"><br />
+										<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+											th:if="${#fields.hasErrors}" th:errors="*{time}"></p>
+
+									</div>
+								</div>
+
+								<div class="md:flex md:items-center mb-6 form-group">
+									<div class="md:w-1/3">
+										<label
+											class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-4"
+											for="reason"> Reason: </label>
+									</div>
+									<div class="md:w-2/3">
+										<textarea
+											class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-500"
+											id=remark th:field="*{reason}">
+                            </textarea>
+										<br />
+										<p class="mt-2 text-sm text-red-600 dark:text-red-500"
+											th:if="${#fields.hasErrors}" th:errors="*{reason}"></p>
+									</div>
+								</div>
+
+
+							</div>
+
+							<div class="md:flex md:justify-center">
+
+								<div>
+									<button
+										class="shadow bg-[#46bb91] text-center hover:bg-[#5c87f8] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-40 rounded"
+										type="submit">Update</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

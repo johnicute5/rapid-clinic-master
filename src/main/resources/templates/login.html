@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="https://cdn.tailwindcss.com"></script>
+	<script type="text/javascript" src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+<title>Login</title>
+</head>
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/toast :: toast}"></div>
+<section class="bg-gray-50 dark:bg-gray-900">
+	<div th:if="${param.error}" id="toast-danger" class="fixed right-5 top-5 flex items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+		<div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+			<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+			<span class="sr-only">Error icon</span>
+		</div>
+		<div class="ml-3 text-sm font-normal">Invalid Credentials</div>
+		<button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+			<span class="sr-only">Close</span>
+			<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+		</button>
+	</div>
+	<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+		<!--<a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+			<img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
+			Flowbite
+		</a>-->
+		<div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+			<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+				<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+					Sign in to your account
+				</h1>
+				<form class="space-y-4 md:space-y-6" th:action="@{/login}"
+					  method="post">
+					<fieldset>
+					<div>
+						<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+						<input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+					</div>
+					<div>
+						<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+						<input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+					</div>
+					<div class="flex items-center justify-between mt-2">
+						<a th:href="@{/forgot_password}" class="text-sm font-medium text-primary-600 hover:underline dark:text-white">Forgot password?</a>
+					</div>
+						<button class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mt-5 md:my-5"
+								type="submit">
+							Login
+						</button>
+
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!--<div class="container flex justify-center mx-auto mt-4">
+	<div class="flex flex-col">
+		<div class="w-full">
+			<div class="shadow-md rounded px-8 bg-white pt-6 pb-8 mb-4">
+				<div th:if="${param.error}" id="toast-danger" class="fixed right-5 top-5 flex items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+					<div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+						<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+						<span class="sr-only">Error icon</span>
+					</div>
+					<div class="ml-3 text-sm font-normal">Invalid Credentials</div>
+					<button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+						<span class="sr-only">Close</span>
+						<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+					</button>
+				</div>
+				<form class="w-full max-w-sm" th:action="@{/login}"
+					  method="post">
+					<fieldset>
+					<div class="md:items-center md:items-center mb-6">
+						<div class="justify-center">
+							<label class="block text-[#101010] text-2xl font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+							>
+								User Registration
+							</label>
+						</div>
+					</div>
+					<div class="md:flex md:items-center mb-6">
+						<div class="md:w-1/3">
+							<label class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+								   for="username">
+								Username:
+							</label>
+						</div>
+						<div class="md:w-2/3">
+							<input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+								   id="username" name="username" type="text">
+						</div>
+					</div>
+					<div class="md:flex md:items-center mb-6">
+						<div class="md:w-1/3">
+							<label class="block text-[#878787] font-bold md:text-right mb-1 mr-6 md:mb-0 pr-6"
+								   for="password">
+								Password:
+							</label>
+						</div>
+						<div class="md:w-2/3">
+							<input class="bg-[#f7f7f7] appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+								   id="password" name="password" type="password">
+						</div>
+					</div>
+
+					<div class="md:flex md:items-center">
+						<div class="md:w-1/3"></div>
+						<div class="md:w-2/3">
+							<button class="shadow bg-[#46bb91] text-center hover:bg-[#5c87f8] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+									type="submit">
+								Login
+							</button>
+						</div>
+					</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>-->
+</body>
+</html>

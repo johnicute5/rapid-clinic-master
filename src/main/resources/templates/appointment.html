@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <title>Rapid Clinic</title>
+</head>
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="inline-block ">
+    <p class="text-xl font-bold inline-block ml-2 mt-8 mb-4 ">Appointment > List Appointments</p>
+    <button class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="w-6 h-6 inline block ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        <span class="justify-center ">
+            <a th:href="@{/add_appointment}">Add New</a></span>
+
+    </button>
+</div>
+
+<div class="container flex justify-center mx-auto mt-4">
+    <div class="flex flex-col">
+        <div class="w-full">
+        
+            <div th:if="${listOfCurrentUserAppoint.isEmpty()}">
+                <p class="text-3xl font-bold text-[#f85c5d] inline-block ml-2 mt-8 mb-4 ">This patient has no
+                    appointment yet </p>
+            </div>
+
+
+            <table class="w-full" th:if="${!listOfCurrentUserAppoint.isEmpty()}">
+                <thead class="bg-[#878787] borderless w-full">
+                <tr>
+                    <th class="px-6 py-2 text-sm text-white">No.</th>
+                    <th class="px-6 py-2 text-sm text-white">Name</th>
+                    <th class="px-6 py-2 text-sm text-white">IC No.</th>
+                    <th class="px-6 py-2 text-sm text-white">Visit On</th>
+                    <th class="px-6 py-2 text-sm text-white">Remark</th>
+                    <th class="px-6 py-2 text-sm text-white">Status</th>
+                </tr>
+                </thead>
+
+                <table th:each="date : ${listOfCurrentUserAppointmentDate}" class="w-full">
+
+                    <tbody class="bg-white">
+                    <tr class="whitespace-nowrap bg-[#f7f7f7] border-b border-t border-gray-200 shadow">
+                        <td class="px-6 py-4"></td>
+                        <td class="px-6 py-4"></td>
+                        <td class="px-6 py-4"></td>
+                        <td class="px-6 py-4 " th:text="${date}"></td>
+                        <td class="px-6 py-4">
+                        </td>
+                        <td class="px-6 py-4"></td>
+                    </tr>
+                    <tr class="whitespace-nowrap border-b border-t border-gray-200 shadow"
+                        th:each="appointment : ${listOfCurrentUserAppoint}" th:if="${appointment.date.equals(date)}">
+                        <td class="px-6 py-4 m-2 text-sm text-gray-500" th:text="${appointmentStat.index+1 }"></td>
+                        <td class="px-6 py-4" th:text="${appointment.name}"></td>
+                        <td class="px-6 py-4" th:text="${appointment.icNo}"></td>
+                        <td class="px-6 py-4 "th:text="${appointment.time}" ></td>
+                        <td class="px-6 py-4" th:text="${appointment.remark}"></td>
+<!--                        <td class="px-6 py-4 bg-[#]" th:if="${appointment.approved}" th:text="${appointment.approved ? 'Approved' :'on Queue' }"></td>-->
+                        <td class="px-6 py-4 bg-[#46bb91]" th:if="${appointment.approved}" >Approved</td>
+                        <td class="px-6 py-4 bg-yellow-200" th:if="${!appointment.approved}" >On Queue</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

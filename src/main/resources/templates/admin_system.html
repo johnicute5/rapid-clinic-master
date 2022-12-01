@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <title>Rapid Clinic</title>
+</head>
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/header :: header}"></div>
+<h1 class="text-xl font-bold text-[#101010] inline-block ml-2 mt-8 mb-4 ">Admin System > Staff
+    Management</h1>
+
+
+<div sec:authorize="hasRole('ADMIN')">
+	<a th:href="@{/admin_system_add}">
+	    <button class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+	        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+	             stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline block ">
+	            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+	        </svg>
+	        <span class="justify-center ">Add Staff</span>
+	    </button>
+	</a>
+</div>
+
+<div class="container flex justify-center mx-auto">
+    <div class="flex flex-col">
+        <div class="w-full">
+            <div class="border-b border-gray-200 shadow">
+
+                <table>
+                    <thead class="bg-[#878787] ">
+                    <tr>
+                        <th class="px-6 py-2 text-xs text-white">No.</th>
+                        <th class="px-6 py-2 text-xs text-white">Full Name</th>
+                        <th class="px-6 py-2 text-xs text-white">IC No.</th>
+                        <th class="px-6 py-2 text-xs text-white">Contact Number</th>
+                        <th class="px-6 py-2 text-xs text-white">Role</th>
+                        <th class="px-6 py-2 text-xs text-white">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                    <tr class="whitespace-nowrap" th:each="staff : ${listOfStaff}">
+                        <td class="px-6 py-4 text-sm text-gray-500" th:text="${staffStat.index + 1}"></td>
+                        <td class="px-6 py-4" >              			
+							<div class="flex items-center space-x-4">
+							<!-- 			                <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+										                  <img class="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
+										                  <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+										                </div> -->
+								<div class="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full dark:bg-[#46bb91]">
+									<span class="uppercase font-medium text-white dark:text-white" th:text="${staff.getInitials}"></span>
+								</div>
+							    <div class="">
+							    <div >
+									<span class=" font-medium capitalize" th:text="${staff.getFullName}"></span>
+								</div>			                
+								<div >
+									@<span th:text="${staff.username}"></span>
+								</div>
+							    </div>
+							</div>              			
+                        </td>
+                        <td class="px-6 py-4" th:text="${staff.icNo}"></td>
+                        <td class="px-6 py-4" th:text="${staff.contactNo}"></td>
+                        <td class="px-6 py-4" th:text="${staff.role}"></td>
+                        <td class="px-6 py-4"><a th:href="@{/admin_system_edit/} + ${staff.id}"
+                                                 class="px-4 py-1 text-sm text-white bg-[#5c87f8] rounded">Edit
+                            Staff</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<title>Rapid Clinic</title>
+</head>
+<body>
+	<div th:replace="~{fragments/header :: header}"></div>
+	<div>
+		<p>
+			Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+		</p>
+		<p>
+			Id <b>[[${#request.userPrincipal.principal.userId}]]</b>
+		</p>
+	</div>
+	<span th:text="${#authentication.getPrincipal().role}"></span>
+	<div sec:authorize="hasRole('PATIENT')">
+		<div th:if="${userListOfAppointments.isEmpty()}" class="flex flex-col items-center justify-center  mx-auto md:h-screen lg:py-0">
+			<div class="container flex justify-center mx-auto">
+				<p class="text-4xl text-[#F85C5D] font-bold">You Have not booked an Appointment yet</p><br/>
+			</div>
+		</div>
+		<div class="grid grid-cols-2">
+		<div th:each="userAppointment : ${userListOfAppointments}" class="mb-4">
+			<div class="max-w-xl px-8 py-4 mx-auto bg-white rounded-lg shadow dark:bg-gray-800" style="cursor: auto;">
+				<div class="flex items-center justify-between">
+					<span class="text-base font-light text-gray-600 dark:text-gray-400" th:text="${userAppointment.date}"></span>
+					<div class="flex justify-end">
+						<span th:if="${userAppointment.status.equals('Done')}" class="px-3 py-1 text-sm font-bold text-green-100 bg-green-600 rounded">Done</span>
+						<span th:if="${userAppointment.status.equals('On Queue')}" class="px-3 py-1 text-sm font-bold text-gray-100 bg-yellow-400 rounded">On Queue</span>
+						<span th:if="${userAppointment.status.equals('Pending')}" class="px-3 py-1 text-sm font-bold text-gray-100 bg-red-400 rounded">Pending</span>
+					</div>
+				</div>
+
+				<p class="text-2xl font-bold text-gray-700 dark:text-white mt-4">Appointment</p>
+
+				<div class="flex items-center justify-start ml-4 mt-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+					</svg>
+					<p class="text-gray-600 dark:text-gray-300 ml-2"><strong>Time: </strong></p>
+					<p class="text-gray-600 dark:text-gray-300 ml-2" th:text="${userAppointment.time}"></p>
+				</div>
+
+				<div class="flex items-center justify-start ml-4 mt-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+					</svg>
+					<p class="text-gray-600 dark:text-gray-300 ml-2"><strong>Assigned Nurse: </strong></p>
+					<p class="text-gray-600 dark:text-gray-300 ml-2" th:text="${userAppointment.nurse}"></p>
+				</div>
+				<div class="flex items-center justify-start ml-4 mt-4 mb-2">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+					</svg>
+					<p class="text-gray-600 dark:text-gray-300 ml-2"><strong>Remarks: </strong></p>
+					<p class="text-gray-600 dark:text-gray-300 ml-2" th:text="${userAppointment.remark}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!--<div sec:authorize="isAuthenticated()">-->
+	<!--<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+	<span th:text="${#authentication.getPrincipal().fullName}"></span>
+	<span th:text="${#authentication.getPrincipal().role}"></span>
+	<span th:text="${#authentication.getPrincipal().authorities}"></span>-->
+
+
+		<!-- Error showing
+	<div th:each="appointment : ${listOfAppointments}" th:if="${appointment.patientId.equals(#authentication.getPrincipal().userId)}"> &lt;!&ndash;th:if="${appointment.patientID}"&ndash;&gt;
+		<li th:text="${appointment.patientId}"></li>
+	</div>-->
+
+		<div sec:authorize="hasRole('DOCTOR')"
+			class="container flex justify-center mx-auto mt-4">
+			<div class="flex flex-col">
+				<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+					<div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+						<div class="overflow-hidden">
+							<table class="min-w-full text-center">
+								<thead class="bg-[#46bb91]">
+									<tr>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Date</th>
+									
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Name</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">IC No</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Visit
+											On</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Status
+										</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">
+											Remarks</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Queue</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">
+											Visitation</th>
+									</tr>
+								</thead>
+								<tbody th:each="date : ${listOfAppointmentDate}">
+									<tr
+										class="whitespace-nowrap border-b border-t border-gray-200 shadow">
+										<td class="px-6 py-4 border-r" th:text="${date}"></td>
+										<td colspan="7" class="px-6 py-4"></td>
+									</tr>
+									<tr th:each="appointment : ${doctorAppointment}"
+										th:if="${appointment.date.equals(date)}"
+										class="bg-[#f7f7f7] border-b">
+										<td class="px-6 py-4 border-r"></td>
+									
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.name}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.icNo}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.time}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+											<span th:if="${2 == 1}">Approved</span> <span
+											th:unless="${2 == 1}">Pending</span>
+										</td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.remark}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">Queue
+											Appointment</td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><button
+												class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+												<svg xmlns="http://www.w3.org/2000/svg" fill="none"
+													viewBox="0 0 24 24" stroke-width="1.5"
+													stroke="currentColor" class="w-6 h-6 inline block ">
+            <path stroke-linecap="round" stroke-linejoin="round"
+														d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+												<span class="justify-center "> <a
+													th:href="@{/visitation_report/}+${appointment.appointmentID}">Create New Visitation</a></span>
+											</button></td>
+
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div sec:authorize="hasAnyRole('ADMIN','NURSE')"
+			class="container flex justify-center mx-auto mt-4">
+			<div class="flex flex-col">
+				<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+					<div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
+						<div class="overflow-hidden">
+							<table class="min-w-full text-center">
+								<thead class="bg-[#46bb91]">
+									<tr>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Date</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">No.</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Name</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">IC No</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Visit
+											On</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Status
+										</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">
+											Remarks</th>
+										<th scope="col"
+											class="text-sm font-medium text-white px-6 py-4">Queue</th>
+									</tr>
+								</thead>
+								<tbody th:each="date : ${listOfAppointmentDate}">
+									<tr
+										class="whitespace-nowrap border-b border-t border-gray-200 shadow">
+										<td class="px-6 py-4 border-r" th:text="${date}"></td>s
+										<td colspan="7" class="px-6 py-4"></td>
+									</tr>
+									<tr th:each="appointment : ${listOfAppointments}"
+										th:if="${appointment.date.equals(date)}"
+										class="bg-[#f7f7f7] border-b">
+										<td class="px-6 py-4 border-r"></td>
+										<td
+											class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+											th:text="${appointmentStat.index+1 }"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.name}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.icNo}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.time}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+											<span th:if="${2 == 1}">Approved</span> <span
+											th:unless="${2 == 1}">Pending</span>
+										</td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+											th:text="${appointment.remark}"></td>
+										<td
+											class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">Queue
+											Appointment</td>
+
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/dist/output.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+<title>Rapid Clinic</title>
+</head>
+<body class="bg-[#f7f7f7]">
+	<div th:replace="~{fragments/header :: header}"></div>
+	<h1
+		class="text-xl font-bold text-[#101010] inline-block ml-2 mt-8 mb-4 ">Visitation
+		Details</h1>
+
+	<a th:href="@{/visitation}">
+		<button
+			class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+			Back</button>
+	</a>
+	<p>
+		Full Name: <label th:text="${visit.name}"></label>
+	</p>
+
+	<p>
+		IcNo. : <label th:text="${visit.icNo}"></label>
+	</p>
+
+
+	<p>
+		Visit Schedule Date:<label th:text="${visit.date}"></label>
+	</p>
+
+	<p>
+		Visit Schedule Time:<label th:text="${visit.time}"></label>
+	</p>
+
+	<p>
+		Reason: <label th:text="${visit.reason}"></label>
+	</p>
+
+</body>
+</html>

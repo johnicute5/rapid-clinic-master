@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+    <title>Rapid Clinic</title>
+</head>
+<body>
+<nav th:fragment="search">
+<div sec:authorize="hasAnyRole('PATIENT')">
+  <form th:action="@{/patient}" method="get">   
+    <div class="relative">
+		<div class="input-group">
+          	<input type="search" name="firstName" th:value="${firstName}"  placeholder="Search patient..." 
+          	class="h-12 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none border border-black focus:border-blue-500" >
+            <span>
+            <button type="submit" class="btn inline-block h-12  pr-8 pl-5 rounded z-0 px-6 py-2 border-2 border-blue-600 text-blue-600 
+      			font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 
+      			focus:outline-none focus:ring-0 transition duration-150 ease-in-out" id="button-addon3">Search</button>
+     		   </span>
+        	</div>
+		</div>
+</form>
+ </div>
+ </nav>
+</body>
+</html>

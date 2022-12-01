@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+	<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+</head>
+
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/header :: header}"></div>
+<p th:inline="text">
+	You are logged as: <b>[[${#request.userPrincipal.principal.fullName}]]</b>  <b>[[${#request.userPrincipal.principal.username}]]</b>
+	(<a href="/logout">logout</a>)
+</p>
+<p>
+	Click the button below to perform an action.
+	<br/>
+	<strong>UserA</strong> will be notified via web socket.
+</p>
+<input id="do-some-action" type="button" value="Click me"/>
+
+<!-- Javascript functions -->
+</script>
+
+<br/>
+<hr/>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/dist/output.css" rel="stylesheet">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+<title>Rapid Clinic</title>
+</head>
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="inline-block ">
+    <p class="text-xl font-bold inline-block ml-2 mt-8 mb-4 ">Patient Dashbord </p>
+    <button class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="w-6 h-6 inline block ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        <span class="justify-center " >
+            <a th:href="@{/patient_form}">Add New</a></span>
+    </button>
+    <button class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="w-6 h-6 inline block ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        <span class="justify-center " >
+            <a th:href="@{/patient}">Back to Dashbord</a></span>
+
+    </button>
+</div>
+
+<h1 class="text-3xl font-bold underline">Patient Credentials</h1>
+<div>
+<table
+		th:each="p : ${patient}" class="whitespace-nowrap border-b border-t border-gray-200 shadow">
+		
+		<tr>
+			<th>Name:</th>
+			<td th:text="${p.firstName} + ' ' + ${p.lastName}" class="px-6 py-4"></td>
+		</tr>
+		<tr>
+			<th>User ID:</th>
+			<td th:text="${p.icNo} + ${pStat.index+1}" class="px-6 py-4"></td>
+		</tr>
+		<tr>
+			<th>Temporary Password:</th>
+			<td th:text="${p.bDay}" class="px-6 py-4"></td>
+		</tr>
+	
+	</table>
+</div>
+

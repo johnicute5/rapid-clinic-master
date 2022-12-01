@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/dist/output.css" rel="stylesheet">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://unpkg.com/flowbite@1.5.4/dist/flowbite.js"></script>
+<title>Rapid Clinic</title>
+</head>
+<body class="bg-[#f7f7f7]">
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="inline-block ">
+    <p class="text-xl font-bold inline-block ml-2 mt-8 mb-4 ">Patient Dashbord </p>
+    <button class="justify-end bg-[#46bb91] px-4 py-1 text-white ml-2 mt-2 mb-4 rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+             class="w-6 h-6 inline block ">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+        </svg>
+        <span class="justify-center " >
+            <a th:href="@{/patient_form}">Add New</a></span>
+
+    </button>
+</div>
+<div class="input-group">
+<form th:action="@{/patient}" method="get">   
+    <div class="flex justify-center">
+		<div class="input-group">
+          	<input type="search" name="firstName" th:value="${firstName}"  placeholder="Search patient..." 
+          	class="h-12 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none border border-black focus:border-blue-500" >
+            <span>
+            <button type="submit" class="btn inline-block h-12  pr-8 pl-5 rounded z-0 px-6 py-2 border-2 border-blue-600 text-blue-600 
+      			font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 
+      			focus:outline-none focus:ring-0 transition duration-150 ease-in-out" id="button-addon3">Search</button>
+     		   </span>
+        	</div>
+		</div>
+</form>
+
+<a th:href="@{patient}"> <button type="submit" class="btn inline-block h-12  pr-8 pl-5 rounded z-0 px-6 
+     			py-2 border-2 border-blue-600 text-blue-600 font-medium text-xs leading-tight 
+     			uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 
+     			transition duration-150 ease-in-out" id="button-addon3">Reset</button></a>
+ </div>
+     			
+<div class="container flex justify-center mx-auto mt-4">
+    <div class="flex flex-col">
+        <div class="w-full">
+            <div>
+                <table>
+                    <thead class="bg-[#46bb91] borderless">
+                    <tr>
+                        <th class="px-6 py-2 text-sm text-white">No.</th>
+                        <th class="px-6 py-2 text-sm text-white">Name</th>
+                        <th class="px-6 py-2 text-sm text-white">IC No.</th>
+                        <th class="px-6 py-2 text-sm text-white">Registration Date</th>
+                        
+                        <th class="px-6 py-2 text-sm text-white">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-[#F7F7F7]">
+                    <tr th:each="p : ${patient}"  class="whitespace-nowrap border-b border-t border-gray-200 shadow">
+                        <td th:text="${pStat.index+1}"  class="px-6 py-4"></td>
+                        <td th:text="${p.firstName} + ' ' + ${p.lastName}" class="px-6 py-4"></td>
+                        <td th:text="${p.icNo } + ${pStat.index+1}" class="px-6 py-4"></td>
+                        <td th:text="${p.registrationDate}" class="px-6 py-4"></td>
+
+                        <td class="px-6 py-4"><a th:href="@{'/patient_edit/' + ${p.id}}"
+							class="px-4 py-1 text-sm text-white bg-[#5c87f8] rounded">
+							Edit </a>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
